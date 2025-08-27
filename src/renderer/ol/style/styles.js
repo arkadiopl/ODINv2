@@ -11,6 +11,7 @@ import corridor from './corridor'
 import marker from './marker'
 import measure from './measure'
 import fallback from './fallback'
+import themisStyle from './themisStyle'
 import { styleFactory } from './styleFactory'
 import * as ID from '../../ids'
 
@@ -30,11 +31,23 @@ export default feature => {
     .map(styleRegistry)
     .map(fn => xs => xs.map(fn))
   $.styleFactory = Signal.of(xs => xs.flatMap(styleFactory))
+  
+  // Dodajemy sygnał dla rozdzielczości mapy
+  $.resolution = Signal.of(null)
+  
+  // Aktualizujemy rozdzielczość przy każdym renderowaniu
+  feature.on('render', event => {
+    const resolution = event.frameState.viewState.resolution
+    $.resolution(resolution)
+  })
 
   const featureId = feature.getId()
   const geometryType = Geometry.geometryType(feature.getGeometry())
-
-  if (ID.isMarkerId(featureId)) return marker($)
+  
+  // Sprawdzamy, czy to obiekt THEMIS_1
+  const properties = feature.getProperties()
+  if (properties && properties.h === 'THEMIS_1') return themisStyle($)
+  else if (ID.isMarkerId(featureId)) return marker($)
   else if (ID.isMeasureId(featureId)) return measure($)
   else if (geometryType === 'Point') return symbol($)
   else if (geometryType === 'Polygon') return polygon($)
