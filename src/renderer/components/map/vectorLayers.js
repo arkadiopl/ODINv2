@@ -27,10 +27,15 @@ const highlightLayer = (sources, styles) => {
 export default (sources, styles) => {
   const { deselectedSource, selectedSource, featureSource } = sources
   const declutter = false
+  
+  // Używamy funkcji stylującej z layerStyles.js
   const vectorLayer = source => new VectorLayer({
     source,
     declutter,
-    selectable: true // non-standard: considered by select interaction,
+    selectable: true, // non-standard: considered by select interaction
+    style: styles.createFeatureStyle, // Używamy naszej funkcji stylującej
+    updateWhileAnimating: true, // Dodajemy, aby ikony były aktualizowane podczas animacji
+    updateWhileInteracting: true // Dodajemy, aby ikony były aktualizowane podczas interakcji
   })
 
   return {

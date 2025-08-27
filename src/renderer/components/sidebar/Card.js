@@ -170,8 +170,13 @@ export const Card = React.forwardRef((props, ref) => {
   children.description = description &&
     <span className='e3de-description'>{description}</span>
 
-  children.avatar = svg &&
-    <div className='avatar' dangerouslySetInnerHTML={{ __html: svg }}/>
+  children.avatar = svg && (
+    props.isThemis 
+      ? <div className='avatar'>
+          <img src={svg} alt="THEMIS_1" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+        </div>
+      : <div className='avatar' dangerouslySetInnerHTML={{ __html: svg }}/>
+  )
 
 
   children.body = (svg || description) &&
