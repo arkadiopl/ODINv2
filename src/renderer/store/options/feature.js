@@ -15,33 +15,6 @@ const identityTag = R.cond([
   [R.T, R.always([])]
 ])
 
-// Funkcja do tworzenia stylu ikony SVG z zachowaniem rzeczywistych rozmiarów w metrach
-export const createThemisStyle = (feature, resolution) => {
-  // Rzeczywista szerokość pojazdu w metrach (zgodnie z definicją w SVG)
-  const vehicleWidth = 10
-  
-  // Obliczamy skalę na podstawie rozdzielczości mapy
-  // Rozdzielczość to metry na piksel, więc dzielimy rozmiar w metrach przez rozdzielczość
-  // 100 to szerokość viewBox w SVG
-  const scale = vehicleWidth / (resolution * 100)
-  
-  // Pobieramy kierunek pojazdu z właściwości (jeśli istnieje)
-  const rotation = feature.get('rotation') || 0
-  
-  return new Style({
-    image: new Icon({
-      src: themisUrl,
-      scale: scale,
-      rotateWithView: true,
-      rotation: rotation * Math.PI / 180,
-      // Punkt zakotwiczenia ikony (środek)
-      anchor: [0.5, 0.5],
-      anchorXUnits: 'fraction',
-      anchorYUnits: 'fraction'
-    })
-  })
-}
-
 export default async function (id) {
   const keys = [R.identity, ID.layerId, ID.hiddenId, ID.lockedId, ID.restrictedId, ID.tagsId]
   const [feature, layer, hidden, locked, restricted, tags] = await this.store.collect(id, keys)

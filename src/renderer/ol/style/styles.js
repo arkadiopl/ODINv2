@@ -31,10 +31,10 @@ export default feature => {
     .map(styleRegistry)
     .map(fn => xs => xs.map(fn))
   $.styleFactory = Signal.of(xs => xs.flatMap(styleFactory))
-  
+
   // Dodajemy sygnał dla rozdzielczości mapy
   $.resolution = Signal.of(null)
-  
+
   // Aktualizujemy rozdzielczość przy każdym renderowaniu
   feature.on('render', event => {
     const resolution = event.frameState.viewState.resolution
@@ -43,8 +43,7 @@ export default feature => {
 
   const featureId = feature.getId()
   const geometryType = Geometry.geometryType(feature.getGeometry())
-  
-  // Sprawdzamy, czy to obiekt THEMIS_1
+
   const properties = feature.getProperties()
   if (properties && properties.h === 'THEMIS_1') return themisStyle($)
   else if (ID.isMarkerId(featureId)) return marker($)

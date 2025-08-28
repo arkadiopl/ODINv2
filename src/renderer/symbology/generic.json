@@ -1,0 +1,29 @@
+[
+  {
+    "sidc": "G*G*GPPW--*****",
+    "scope": "TASK",
+    "geometry": "Point",
+    "dimensions": "C2",
+    "hierarchy": [
+      "REPOSITION"
+    ]
+  },
+  {
+    "sidc": "G*G*GLB---*****",
+    "scope": "TASK",
+    "geometry": "LineString",
+    "dimensions": "C2",
+    "hierarchy": [
+      "NAVIGATE"
+    ]
+  },
+  {
+    "sidc": "G*G*GAG---*****",
+    "scope": "TASK",
+    "geometry": "Polygon",
+    "dimensions": "C2",
+    "hierarchy": [
+      "FOLLOW"
+    ]
+  }
+]
